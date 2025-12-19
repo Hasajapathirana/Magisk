@@ -259,6 +259,14 @@ fi
 ui_print "- Repacking boot image"
 ./magiskboot repack "$BOOTIMAGE" || abort "! Unable to repack boot image"
 
+########################################
+# Samsung SignerVer02 (BEFORE AVB footer)
+########################################
+
+ui_print "- Adding Samsung SignerVer02 metadata"
+printf "SignerVer02\0\0\0\0\0" >> new-boot.img
+truncate -s +496 new-boot.img
+
 # Sign chromeos boot
 $CHROMEOS && sign_chromeos
 
